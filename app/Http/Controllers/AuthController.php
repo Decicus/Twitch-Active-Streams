@@ -72,7 +72,8 @@ class AuthController extends Controller
             'name' => $user->name,
             'display_name' => $user->user['display_name'],
             'email' => $user->email,
-            'avatar' => $user->avatar
+            'avatar' => $user->avatar,
+            'admin' => 0
         ]);
     }
 }

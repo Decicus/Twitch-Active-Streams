@@ -13,6 +13,7 @@
 
 Route::group(['middleware' => ['web']], function() {
     Route::get('/', ['as' => 'home', 'uses' => 'PageController@home']);
+    Route::get('/streams', ['as' => 'streams', 'uses' => 'PageController@streams']);
 
     Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
         Route::get('/twitch', ['as' => 'twitch', 'uses' => 'AuthController@redirectToProvider']);
