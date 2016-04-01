@@ -63,17 +63,10 @@ class AuthController extends Controller
      */
     private function findOrCreateUser($user)
     {
-        if($authUser = User::where('_id', $user->id)->first()) {
+        if($authUser = User::where(['_id' => $user->id, 'admin' => 1])->first()) {
             return $authUser;
         }
 
-        return User::create([
-            '_id' => $user->id,
-            'name' => $user->name,
-            'display_name' => $user->user['display_name'],
-            'email' => $user->email,
-            'avatar' => $user->avatar,
-            'admin' => 0
-        ]);
+        return redirect()->route('home', ['error' => 'unauthorized']);
     }
 }
