@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateActiveStreamsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,11 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('active_streams', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('_id')->unique();
-            $table->string('name');
-            $table->string('display_name');
-            $table->string('email');
-            $table->string('avatar');
-            $table->boolean('admin');
-
-            $table->rememberToken();
+            $table->string('username');
+            $table->datetime('last_stream');
             $table->timestamps();
         });
     }
@@ -33,6 +28,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        //
     }
 }
