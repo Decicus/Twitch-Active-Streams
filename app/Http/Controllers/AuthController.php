@@ -63,7 +63,7 @@ class AuthController extends Controller
      */
     private function findOrCreateUser($user)
     {
-        if($authUser = User::where(['_id' => $user->id])->first()) {
+        if ($authUser = User::where(['_id' => $user->id])->first()) {
             return $authUser;
         }
 
@@ -71,10 +71,7 @@ class AuthController extends Controller
             '_id' => $user->id,
             'name' => $user->name,
             'display_name' => $user->user['display_name'],
-            'email' => $user->email,
             'avatar' => $user->avatar,
-            'approved' => 0,
-            'rejected' => 0,
             'admin' => 0
         ]);
     }

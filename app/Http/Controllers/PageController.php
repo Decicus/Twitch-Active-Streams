@@ -33,7 +33,7 @@ class PageController extends Controller
      */
     public function streams(Request $request, $user = null)
     {
-        if(empty($user)) {
+        if (empty($user)) {
             return view('streams.main', ['page' => 'Streams']);
         }
 

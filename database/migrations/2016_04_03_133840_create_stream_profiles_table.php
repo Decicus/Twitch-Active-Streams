@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActiveStreamsTable extends Migration
+class CreateStreamProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,15 @@ class CreateActiveStreamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('active_streams', function (Blueprint $table) {
+        Schema::create('stream_profiles', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('_id')->unique();
-            $table->string('username');
+            $table->string('bio');
+            $table->string('social');
+            $table->datetime('last_game');
             $table->datetime('last_stream');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +31,6 @@ class CreateActiveStreamsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('stream_profiles');
     }
 }

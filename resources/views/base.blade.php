@@ -5,16 +5,10 @@
         ->route('home', 'Home')
         ->route('streams', 'Streams');
 
-    $navRight = Menu::new()
-        ->addClass('nav navbar-nav navbar-right');
-
     if(Auth::check()) {
-        // TODO: Add menu items for logged in users.
         if(Auth::user()->admin) {
             $nav->route('admin.home', 'Admin');
         }
-    } else {
-        $navRight->route('auth.twitch', '<i class="fa fa-twitch fa-1x"></i> Connect with Twitch');
     }
 ?>
 <!DOCTYPE html>
@@ -38,7 +32,20 @@
 
                 {!! $nav->render() !!}
 
-                {!! $navRight->render() !!}
+                <ul class="nav navbar-nav navbar-right">
+                    @if(Auth::check())
+                        <div class="dropdown">
+                            <a href="#" type="button" class="btn btn-default navbar-btn dropdown" data-toggle="dropdown">
+                                <i class="fa fa-user fa-1x"></i> {{ Auth::user()->display_name }} <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li role="presentation"><a href="{{ URL::route('auth.logout') }}"><i class="fa fa-sign-out fa-1x"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    @else
+                        <li><a href="{{ URL::route('auth.twitch') }}"><i class="fa fa-twitch fa-1x"></i> Connect with Twitch</a></li>
+                    @endif
+                </ul>
             </div>
         </nav>
 
