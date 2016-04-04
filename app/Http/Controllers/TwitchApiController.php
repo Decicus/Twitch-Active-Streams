@@ -115,6 +115,16 @@ class TwitchApiController extends Controller
     }
 
     /**
+     * Returns values from the Kraken users endpoint
+     * @param  string $user Username of Twitch user
+     * @return TwitchApiController\get
+     */
+    public function users($user = '')
+    {
+        return $this->get('users/' . $user);
+    }
+
+    /**
      * Returns result of the Kraken API for videos.
      * @param  string  $channel Channel name, can also be specified in the request.
      * @param  integer $limit   Limit of highlights

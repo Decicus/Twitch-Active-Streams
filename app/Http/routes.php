@@ -24,5 +24,9 @@ Route::group(['middleware' => ['web']], function() {
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']], function () {
         Route::get('/', ['as' => 'home', 'uses' => 'AdminController@home']);
+        Route::group(['prefix' => 'user', 'as' => 'user.'], function() {
+            Route::get('add', ['uses' => 'AdminController@add']);
+            Route::post('add', ['uses' => 'AdminController@addUserPost']);
+        });
     });
 });
