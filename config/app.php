@@ -158,6 +158,7 @@ return [
 
         SocialiteProviders\Manager\ServiceProvider::class,
         Spatie\Menu\Laravel\MenuServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
     ],
 
     /*
@@ -207,6 +208,8 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Menu' => Spatie\Menu\Laravel\MenuFacade::class,
         'Input' => Illuminate\Support\Facades\Input::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];

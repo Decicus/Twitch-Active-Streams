@@ -21,6 +21,10 @@ class AdminController extends Controller
             'api_error' => [
                 'type' => 'warning',
                 'text' => 'API error'
+            ],
+            'already_exists' => [
+                'type' => 'danger',
+                'text' => 'A stream profile for this user already exists.'
             ]
         ],
     ];
@@ -76,7 +80,7 @@ class AdminController extends Controller
     {
         $route = 'user.add';
         $inputs = $request->only(['username', 'bio']);
-        $username = $inputs['username'];
+        $username = strtolower($inputs['username']);
         $bio = $inputs['bio'];
         if (empty($username)) {
             return $this->error($route, 'missing_params', 'Channel name');
@@ -86,12 +90,35 @@ class AdminController extends Controller
             return $this->error($route, 'api_error', $user['error'] . ' &mdash; ' . $user['message']);
         }
 
-        $getUser = AuthController\findOrCreateUser($user);
-        // TODO: Finish creation of profile.
+        $getUser = findOrCreateUser($user);
+        $profile = findOrCreateProfile($user['_id']);
+        if (!empty($profile->bio)) {
+            return $this->error($route, 'already_exists', '(' . $user['display_name'] . ')');
+        }
+        $profile->bio = $bio;
+        $profile->save();
+        return view('admin.user.add', ['page' => 'Admin &mdash; Add user', 'success' => $user->user['display_name']]);
     }
 
     /**
-     * Return user if exists; create and return if doesn't
+     * Retrievies a stream profile based on their Twitch user ID.
+     *
+     * @param  integer $id The Twitch user ID
+     * @return App\StreamProfile
+     */
+    private function findOrCreateProfile($id)
+    {
+        if($profile = StreamProfile::where(['_id' => $id])->first()) {
+            return $profile;
+        }
+
+        return StreamProfile::create([
+            '_id' => $id
+        ]);
+    }
+
+    /**
+     * Return user based on values from the Twitch users API; create if it doesn't exist.
      *
      * @param array $user
      * @return User
