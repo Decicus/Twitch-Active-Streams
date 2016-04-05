@@ -3,7 +3,7 @@
         ->addClass('nav navbar-nav')
         ->setActive(Request::url())
         ->route('home', 'Home')
-        ->route('streams', 'Streams');
+        ->route('streams.main', 'Streams');
 
     if(Auth::check()) {
         if(Auth::user()->admin) {

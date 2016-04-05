@@ -11,6 +11,8 @@ use App\StreamProfile;
 class AdminController extends Controller
 {
     private $twitchApi;
+    private $User;
+    private $StreamProfile;
     private $errors = [
         'home' => [],
         'user_add' => [
@@ -35,6 +37,8 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->twitchApi = new TwitchApiController(env('TWITCH_CLIENT_ID'), env('TWITCH_CLIENT_SECRET'));
+        $this->User = new User;
+        $this->StreamProfile = new StreamProfile;
     }
 
     /**
@@ -67,7 +71,7 @@ class AdminController extends Controller
      */
     public function addUser(Request $request)
     {
-        return view('admin.home', ['page' => 'Admin &mdash; Add user', 'errors' => $this->errors['user_add']]);
+        return view('admin.user.add', ['page' => 'Admin &mdash; Add user', 'errors' => $this->errors['user_add']]);
     }
 
     /**
@@ -90,51 +94,13 @@ class AdminController extends Controller
             return $this->error($route, 'api_error', $user['error'] . ' &mdash; ' . $user['message']);
         }
 
-        $getUser = findOrCreateUser($user);
-        $profile = findOrCreateProfile($user['_id']);
+        $getUser = $this->User->findOrCreateUser($user);
+        $profile = $this->StreamProfile->findOrCreateProfile($user['_id']);
         if (!empty($profile->bio)) {
             return $this->error($route, 'already_exists', '(' . $user['display_name'] . ')');
         }
         $profile->bio = $bio;
         $profile->save();
-        return view('admin.user.add', ['page' => 'Admin &mdash; Add user', 'success' => $user->user['display_name']]);
-    }
-
-    /**
-     * Retrievies a stream profile based on their Twitch user ID.
-     *
-     * @param  integer $id The Twitch user ID
-     * @return App\StreamProfile
-     */
-    private function findOrCreateProfile($id)
-    {
-        if($profile = StreamProfile::where(['_id' => $id])->first()) {
-            return $profile;
-        }
-
-        return StreamProfile::create([
-            '_id' => $id
-        ]);
-    }
-
-    /**
-     * Return user based on values from the Twitch users API; create if it doesn't exist.
-     *
-     * @param array $user
-     * @return User
-     */
-    private function findOrCreateUser($user)
-    {
-        if ($authUser = User::where(['_id' => $user['_id']])->first()) {
-            return $authUser;
-        }
-
-        return User::create([
-            '_id' => $user['_id'],
-            'name' => $user['name'],
-            'display_name' => $user['display_name'],
-            'avatar' => $user['logo'],
-            'admin' => 0
-        ]);
+        return view('admin.user.add', ['page' => 'Admin &mdash; Add user', 'success' => $user['display_name']]);
     }
 }

@@ -13,8 +13,12 @@
 
 Route::group(['middleware' => ['web']], function() {
     Route::get('/', ['as' => 'home', 'uses' => 'PageController@home']);
-    Route::get('/streams/{user?}', ['as' => 'streams', 'uses' => 'PageController@streams'])
-        ->where('user', '([A-z0-9]{1,25})');
+
+    Route::group(['prefix' => 'streams', 'as' => 'streams.'], function() {
+        Route::get('/', ['as' => 'main', 'uses' => 'PageController@streams']);
+        Route::get('/{user?}', ['as' => 'user', 'uses' => 'PageController@streams'])
+            ->where('user', '([A-z0-9]{1,25})');
+    });
 
     Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
         Route::get('/twitch', ['as' => 'twitch', 'uses' => 'AuthController@redirectToProvider']);
@@ -25,7 +29,7 @@ Route::group(['middleware' => ['web']], function() {
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']], function () {
         Route::get('/', ['as' => 'home', 'uses' => 'AdminController@home']);
         Route::group(['prefix' => 'user', 'as' => 'user.'], function() {
-            Route::get('add', ['uses' => 'AdminController@add']);
+            Route::get('add', ['as' => 'add', 'uses' => 'AdminController@addUser']);
             Route::post('add', ['uses' => 'AdminController@addUserPost']);
         });
     });
