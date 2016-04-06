@@ -159,6 +159,7 @@ return [
         SocialiteProviders\Manager\ServiceProvider::class,
         Spatie\Menu\Laravel\MenuServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Golonka\BBCode\BBCodeParserServiceProvider::class,
     ],
 
     /*
@@ -210,6 +211,7 @@ return [
         'Input' => Illuminate\Support\Facades\Input::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'BBCode' => Golonka\BBCode\Facades\BBCodeParser::class,
     ],
 
 ];

@@ -13,8 +13,7 @@ class CreateStreamProfilesTable extends Migration
     public function up()
     {
         Schema::create('stream_profiles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('_id')->unique();
+            $table->integer('_id')->unique()->index();
             $table->string('bio')->nullable();
             $table->string('last_game')->nullable();
             $table->datetime('last_stream')->nullable();

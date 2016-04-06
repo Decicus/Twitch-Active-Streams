@@ -18,7 +18,7 @@
 
             <div class="form-group">
                 {!! Form::label('bio', 'Stream bio (optional):') !!}
-                {!! Form::textarea('bio', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'The bio of the stream - Supports Markdown']) !!}
+                {!! Form::textarea('bio', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'The bio of the stream - Supports BBCode']) !!}
             </div>
 
             {!! Form::token() !!}

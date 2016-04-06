@@ -7,6 +7,7 @@
         @if(!empty($profiles->first()))
             <ul class="list-group">
                 @foreach($profiles as $profile)
+                    {{-- TODO: Use relationships. --}}
                     <?php
                         $user = App\User::where(['_id' => $profile->_id])->first();
                     ?>

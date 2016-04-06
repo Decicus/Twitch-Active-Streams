@@ -59,4 +59,12 @@ class StreamProfile extends Model
             'last_stream' => null
         ]);
     }
+
+    /**
+     * Get the user connected to the profile.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
