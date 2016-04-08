@@ -52,7 +52,8 @@ class PageController extends Controller
     public function streams(Request $request, $user = null)
     {
         if (empty($user)) {
-            $profiles = $this->StreamProfile::all();
+			$streamProfile = $this->StreamProfile;
+            $profiles = $streamProfile::all();
             return view('streams.main', ['page' => 'Streams', 'errors' => $this->errors['streams.main'], 'profiles' => $profiles]);
         }
 
