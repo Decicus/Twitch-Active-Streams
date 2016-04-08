@@ -29,6 +29,9 @@ class AdminController extends Controller
                 'text' => 'A stream profile for this user already exists.'
             ]
         ],
+        'update_user' => [
+            
+        ]
     ];
 
     /**
@@ -102,5 +105,10 @@ class AdminController extends Controller
         $profile->bio = $bio;
         $profile->save();
         return view('admin.user.add', ['page' => 'Admin &mdash; Add user', 'success' => $user['display_name']]);
+    }
+
+    public function updateUser(Request $request)
+    {
+        return view('admin.user.update', ['page' => 'Admin &mdash; Update user', 'errors' => $this->errors['user_update']]);
     }
 }

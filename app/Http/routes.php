@@ -14,6 +14,10 @@
 Route::group(['middleware' => ['web']], function() {
     Route::get('/', ['as' => 'home', 'uses' => 'PageController@home']);
 
+    Route::group(['prefix' => 'api', 'as' => 'api.'], function() {
+        Route::get('/', ['as' => 'base', 'uses' => 'ApiController@base']);
+    });
+
     Route::group(['prefix' => 'streams', 'as' => 'streams.'], function() {
         Route::get('/', ['as' => 'main', 'uses' => 'PageController@streams']);
         Route::get('/{user?}', ['as' => 'user', 'uses' => 'PageController@streams'])
@@ -31,6 +35,8 @@ Route::group(['middleware' => ['web']], function() {
         Route::group(['prefix' => 'user', 'as' => 'user.'], function() {
             Route::get('add', ['as' => 'add', 'uses' => 'AdminController@addUser']);
             Route::post('add', ['uses' => 'AdminController@addUserPost']);
+
+            Route::get('update', ['as' => 'update', 'uses' => 'AdminController@update']);
         });
     });
 });
