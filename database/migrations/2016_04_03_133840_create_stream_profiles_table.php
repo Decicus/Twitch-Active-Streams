@@ -15,7 +15,7 @@ class CreateStreamProfilesTable extends Migration
         Schema::create('stream_profiles', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('_id')->unique();
-            $table->string('bio')->nullable();
+            $table->string('bio', 10000)->nullable();
             $table->string('last_game')->nullable();
             $table->datetime('last_stream')->nullable();
             $table->timestamps();

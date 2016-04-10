@@ -31,6 +31,13 @@ class StreamProfile extends Model
     protected $fillable = ['_id', 'bio', 'last_game', 'last_stream'];
 
     /**
+     * The attributes that are hidden.
+     *
+     * @var array
+     */
+    protected $hidden = ['id', 'deleted_at'];
+
+    /**
      * Retrieves only a stream profile based on their Twitch user ID
      * @param int $id Twitch user ID
      * @return App\StreamProfile

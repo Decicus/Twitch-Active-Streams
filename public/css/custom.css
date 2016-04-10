@@ -25,3 +25,8 @@
 .text .fa-twitch {
     color: #6441a5;
 }
+
+.streams-avatar {
+    width: 40px;
+    height: auto;
+}

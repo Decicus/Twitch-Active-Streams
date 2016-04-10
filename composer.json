@@ -10,7 +10,8 @@
         "socialiteproviders/twitch": "^2.0",
         "guzzlehttp/guzzle": "^6.2",
         "laravelcollective/html": "^5.2",
-        "golonka/bbcodeparser": "^2.2"
+        "golonka/bbcodeparser": "^2.2",
+        "nesbot/carbon": "^1.21"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

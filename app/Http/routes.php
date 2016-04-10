@@ -16,6 +16,13 @@ Route::group(['middleware' => ['web']], function() {
 
     Route::group(['prefix' => 'api', 'as' => 'api.'], function() {
         Route::get('/', ['as' => 'base', 'uses' => 'ApiController@base']);
+
+        // TODO: Add to controller
+        Route::group(['prefix' => 'streams', 'as' => 'streams.'], function() {
+            Route::get('/', ['as' => 'base', 'uses' => 'ApiController@streams']);
+            Route::get('/{user?}', ['as' => 'base', 'uses' => 'ApiController@streams'])
+                ->where('user', '([A-z0-9]{1,25})');
+        });
     });
 
     Route::group(['prefix' => 'streams', 'as' => 'streams.'], function() {

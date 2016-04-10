@@ -55,4 +55,14 @@ class User extends Authenticatable
             'admin' => 0
         ]);
     }
+
+    /**
+     * Get the associated StreamProfile.
+     *
+     * @return App\StreamProfile
+     */
+    public function profile()
+    {
+        return $this->belongsTo(StreamProfile::class);
+    }
 }
