@@ -11,7 +11,7 @@
                     <?php
                         $user = App\User::where(['_id' => $profile->_id])->first();
                     ?>
-                    <a class="list-group-item list-group-item-info" href="{{ route('streams.user', ['user' => $user->name]) }}"><img src="{{ $user->avatar }}" class="streams-avatar" /> {{ $user->display_name }}</a>
+                    <a class="list-group-item list-group-item-info" href="{{ route('streams.user', ['user' => $user->name]) }}"><img src="{{ $user->avatar }}" class="streams-avatar" /> {{ $user->display_name }} &mdash; Last stream: {{ $profile->last_stream }}</a>
                 @endforeach
             </div>
         @else

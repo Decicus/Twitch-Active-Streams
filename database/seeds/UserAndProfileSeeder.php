@@ -63,7 +63,7 @@ class UserAndProfileSeeder extends Seeder
             'name' => 'cherrylynnie',
             'display_name' => 'cherrylynnie',
             'avatar' => 'https://static-cdn.jtvnw.net/jtv_user_pictures/cherrylynnie-profile_image-b71bd4660c445612-300x300.jpeg',
-            'admin' => 0,
+            'admin' => 1,
             'created_at' => $now,
             'updated_at' => $now
         ]);
