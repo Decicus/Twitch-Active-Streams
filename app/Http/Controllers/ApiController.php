@@ -37,12 +37,17 @@ class ApiController extends Controller
     public function base()
     {
         $base = url('/api');
+        $links = [
+            '/',
+            '/streams',
+            '/admin'
+        ];
+        foreach($links as $index => $link) {
+            $links[$index] = $base . $link;
+        }
+
         return $this->respJson([
-            'links' => [
-                'base' => $base,
-                'streams' => $base . '/streams',
-                'admin' => $base . '/admin'
-            ]
+            'links' => $links
         ]);
     }
 }

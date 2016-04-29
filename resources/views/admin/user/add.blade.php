@@ -3,7 +3,7 @@
 @section('main')
     @if(!empty($success))
         <div class="alert alert-success">
-            Successfully updated the stream profile for: <strong>{{ $success }}</strong>.
+            Successfully added the stream profile for: <strong>{{ $success }}</strong>.
         </div>
     @endif
 
@@ -17,7 +17,7 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('bio', 'Stream bio (optional):') !!}
+                {!! Form::label('bio', 'Stream bio (optional &mdash; Supports BBCode):') !!}
                 {!! Form::textarea('bio', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'The bio of the stream - Supports BBCode']) !!}
             </div>
 
