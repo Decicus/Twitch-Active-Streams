@@ -40,10 +40,11 @@ Route::group(['middleware' => ['web']], function() {
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']], function () {
         Route::get('/', ['as' => 'home', 'uses' => 'AdminController@home']);
         Route::group(['prefix' => 'user', 'as' => 'user.'], function() {
-            Route::get('add', ['as' => 'add', 'uses' => 'AdminController@addUser']);
-            Route::post('add', ['uses' => 'AdminController@addUserPost']);
 
-            Route::get('update', ['as' => 'update', 'uses' => 'AdminController@update']);
+            Route::match(['get', 'post'], 'add', ['as' => 'add', 'uses' => 'AdminController@addUser']);
+
+            Route::match(['get', 'post'], 'edit/{user?}', ['as' => 'edit', 'uses' => 'AdminController@editUser'])
+                ->where('user', '([A-z0-9]{1,25})');
         });
     });
 });

@@ -3,7 +3,7 @@
 @section('main')
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title"><strong>{{ $user->display_name }}</strong></h3>
+            <h3 class="panel-title"><img src="{{ $user->avatar }}" class="streams-avatar" alt="{{ $user->display_name }}" title="{{ $user->display_name }}" /> <strong>{{ $user->display_name }}</strong></h3>
         </div>
 
         <div class="panel-body">

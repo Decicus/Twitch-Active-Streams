@@ -13,7 +13,7 @@
                     ?>
                     <a class="list-group-item" href="{{ route('streams.user', ['user' => $user->name]) }}">
                         <h4 class="list-group-item-heading"><img src="{{ $user->avatar }}" class="streams-avatar" /> {{ $user->display_name }}</h4>
-                        <p class="list-group-item-text">Last stream: {{ $profile->last_stream }}</p>
+                        <p class="list-group-item-text">Last stream: {{ $profile->last_stream or 'Unknown' }}</p>
                     </a>
                 @endforeach
             </div>

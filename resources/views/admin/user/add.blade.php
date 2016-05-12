@@ -11,18 +11,10 @@
         <p class="text text-info">This page will allow you to add a stream profile for a <i class="fa fa-twitch fa-1x"></i> streamer.</p>
 
         {!! Form::open(['route' => 'admin.user.add', 'method' => 'post']) !!}
-            <div class="form-group">
-                {!! Form::label('username', 'Twitch username:') !!}
-                {!! Form::text('username', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => Auth::user()->name]) !!}
-            </div>
-
-            <div class="form-group">
-                {!! Form::label('bio', 'Stream bio (optional):') !!}
-                {!! Form::textarea('bio', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'The bio of the stream - Supports BBCode']) !!}
-            </div>
+            @include('admin.user.form-input')
 
             {!! Form::token() !!}
-            {!! Form::submit('Add stream profile', ['class' => 'btn btn-success']) !!}
+            <button type="submit" class="btn btn-success"><i class="fa fa-user-plus fa-1x"></i> Add stream profile</button>
         {!! Form::close() !!}
     </div>
 @endsection
