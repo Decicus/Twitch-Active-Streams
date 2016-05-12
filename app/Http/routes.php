@@ -43,10 +43,7 @@ Route::group(['middleware' => ['web']], function() {
             Route::get('add', ['as' => 'add', 'uses' => 'AdminController@addUser']);
             Route::post('add', ['uses' => 'AdminController@addUserPost']);
 
-            Route::get('update/{user}', ['as' => 'update', 'uses' => 'AdminController@update'])
-                ->where('user', '([A-z0-9]{1,25})');
-            Route::post('update/{user}', ['uses' => 'AdminController@updateUserPost'])
-                ->where('user', '([A-z0-9]{1,25})');
+            Route::get('update', ['as' => 'update', 'uses' => 'AdminController@update']);
         });
     });
 });

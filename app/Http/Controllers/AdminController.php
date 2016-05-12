@@ -26,18 +26,11 @@ class AdminController extends Controller
             ],
             'already_exists' => [
                 'type' => 'danger',
-                'text' => 'A stream profile for this user already exists'
+                'text' => 'A stream profile for this user already exists.'
             ]
         ],
         'update_user' => [
-            'missing_params' => [
-                'type' => 'warning',
-                'text' => 'Missing parameter(s)'
-            ],
-            'invalid_channel' => [
-                'type' => 'warning',
-                'text' => 'This channel does not have an intro'
-            ]
+            
         ]
     ];
 
@@ -96,11 +89,9 @@ class AdminController extends Controller
         $inputs = $request->only(['username', 'bio']);
         $username = strtolower($inputs['username']);
         $bio = $inputs['bio'];
-
         if (empty($username)) {
             return $this->error($route, 'missing_params', 'Channel name');
         }
-
         $user = $this->twitchApi->users($username);
         if (!empty($user['status'])) {
             return $this->error($route, 'api_error', $user['error'] . ' &mdash; ' . $user['message']);
@@ -109,60 +100,15 @@ class AdminController extends Controller
         $getUser = $this->User->findOrCreateUser($user);
         $profile = $this->StreamProfile->findOrCreateProfile($user['_id']);
         if (!empty($profile->bio)) {
-            return $this->error($route, 'already_exists', $user['display_name']);
+            return $this->error($route, 'already_exists', '(' . $user['display_name'] . ')');
         }
-
         $profile->bio = $bio;
         $profile->save();
         return view('admin.user.add', ['page' => 'Admin &mdash; Add user', 'success' => $user['display_name']]);
     }
 
-
-    /**
-     * The view for updating user profiles.
-     *
-     * @param  Request $request
-     * @param  string  $username    Username of Twitch user to edit stream profile for.
-     * @return response
-     */
-    public function updateUser(Request $request, $username = null)
+    public function updateUser(Request $request)
     {
-        $user = $this->User->findByName($username);
-        if (empty($user)) {
-            return $this->error('user.update', 'invalid_channel', $username);
-        }
-        return view('admin.user.update', ['page' => 'Admin &mdash; Update user', 'errors' => $this->errors['user_update'], 'user' => $user]);
-    }
-
-    /**
-     * Updates an already existing user's profile
-     *
-     * @param  Request $request
-     * @param  string  $username    Username of Twitch user to edit stream profile for.
-     * @return response
-     */
-    public function updateUserPost(Request $request, $username = null)
-    {
-        $route = 'user.update';
-        $inputs = $request->only(['bio']);
-        $bio = $inputs['bio'];
-
-        if (empty($username)) {
-            return $this->error($route, 'missing_params', 'Channel name');
-        }
-
-        $user = $this->User->findByName($username);
-        if (empty($user)) {
-            return $this->error($route, 'invalid_channel', $username);
-        }
-
-        $profile = $this->StreamProfile->findById($user['_id']);
-        if (empty($profile->bio)) {
-            return $this->error($route, 'invalid_channel', $user['display_name']);
-        }
-
-        $profile->bio = $bio;
-        $profile->save();
-        return view('admin.user.update', ['page' => 'Admin &mdash; Update user', 'success' => $user['display_name'], 'errors' => $this->errors['user_update'], 'user' => $user]);
+        return view('admin.user.update', ['page' => 'Admin &mdash; Update user', 'errors' => $this->errors['user_update']]);
     }
 }
