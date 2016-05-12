@@ -69,9 +69,11 @@ class StreamProfile extends Model
 
     /**
      * Get the user connected to the profile.
+     *
+     * @return App\User
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\User', '_id', '_id');
     }
 }

@@ -37,6 +37,10 @@
                             'user.add' => [
                                 'fa' => 'user-plus',
                                 'text' => 'Add user'
+                            ],
+                            'user.edit' => [
+                                'fa' => 'pencil-square',
+                                'text' => 'Edit user'
                             ]
                         ]
                     ];

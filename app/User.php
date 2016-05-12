@@ -63,6 +63,6 @@ class User extends Authenticatable
      */
     public function profile()
     {
-        return $this->belongsTo(StreamProfile::class);
+        return $this->hasOne('App\StreamProfile', '_id', '_id');
     }
 }
