@@ -36,11 +36,19 @@
                             ],
                             'user.add' => [
                                 'fa' => 'user-plus',
-                                'text' => 'Add user'
+                                'text' => 'Add profile'
                             ],
                             'user.edit' => [
-                                'fa' => 'pencil-square',
-                                'text' => 'Edit user'
+                                'fa' => 'pencil-square-o',
+                                'text' => 'Edit profile'
+                            ],
+                            'user.delete' => [
+                                'fa' => 'user-times',
+                                'text' => 'Delete profile'
+                            ],
+                            'user.restore' => [
+                                'fa' => 'user-secret',
+                                'text' => 'Restore profile'
                             ]
                         ]
                     ];
@@ -78,7 +86,7 @@
                                 <i class="fa fa-user fa-1x"></i> {{ Auth::user()->display_name }} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                <li role="presentation"><a href="{{ route('auth.logout') }}"><i class="fa fa-sign-out fa-1x"></i> Logout</a></li>
+                                <li role="presentation"><a href="{{ route('auth.logout') }}"><i class="fa fa-sign-out fa-1x"></i> Log out</a></li>
                             </ul>
                         </div>
                     @else

@@ -2,9 +2,7 @@
 
 @section('main')
     @if(!empty($success))
-        <div class="alert alert-success">
-            <div class="alert alert-success">Successfully edited the stream profile for: <strong>{{ $success }}</strong>.</div>
-        </div>
+        <div class="alert alert-warning">Successfully edited the stream profile for: <strong>{{ $success }}</strong>.</div>
     @endif
 
     <div class="jumbotron">

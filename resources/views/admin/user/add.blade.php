@@ -8,7 +8,7 @@
     @endif
 
     <div class="jumbotron">
-        <p class="text text-info">This page will allow you to add a stream profile for a <i class="fa fa-twitch fa-1x"></i> streamer.</p>
+        <p>This page will allow you to add a stream profile for a <i class="fa fa-twitch fa-1x"></i> streamer.</p>
 
         {!! Form::open(['route' => 'admin.user.add', 'method' => 'post']) !!}
             @include('admin.user.form-input')

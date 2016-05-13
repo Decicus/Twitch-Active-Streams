@@ -39,12 +39,16 @@ Route::group(['middleware' => ['web']], function() {
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']], function () {
         Route::get('/', ['as' => 'home', 'uses' => 'AdminController@home']);
-        Route::group(['prefix' => 'user', 'as' => 'user.'], function() {
+        Route::group(['prefix' => 'profiles', 'as' => 'user.'], function() {
 
             Route::match(['get', 'post'], 'add', ['as' => 'add', 'uses' => 'AdminController@addUser']);
 
             Route::match(['get', 'post'], 'edit/{user?}', ['as' => 'edit', 'uses' => 'AdminController@editUser'])
                 ->where('user', '([A-z0-9]{1,25})');
+
+            Route::match(['get', 'post'], 'delete', ['as' => 'delete', 'uses' => 'AdminController@deleteUser']);
+
+            Route::match(['get', 'post'], 'restore', ['as' => 'restore', 'uses' => 'AdminController@restoreUser']);
         });
     });
 });

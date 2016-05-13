@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\StreamProfile;
+
 class StreamProfile extends Model
 {
     use SoftDeletes;
@@ -39,6 +41,7 @@ class StreamProfile extends Model
 
     /**
      * Retrieves only a stream profile based on their Twitch user ID
+     *
      * @param int $id Twitch user ID
      * @return App\StreamProfile
      */
@@ -48,14 +51,25 @@ class StreamProfile extends Model
     }
 
     /**
+     * Finds a soft-deleted stream profile based on their Twitch user ID
+     *
+     * @param  int $id Twitch user ID
+     * @return App\StreamProfile
+     */
+    public function findTrashed($id)
+    {
+        return $this::where(['_id' => $id])->onlyTrashed()->first();
+    }
+
+    /**
      * Retrieves or creates a stream profile based on their Twitch user ID.
      *
-     * @param  int $id The Twitch user ID
+     * @param  int  $id The Twitch user ID
      * @return App\StreamProfile
      */
     public function findOrCreateProfile($id)
     {
-        if($profile = StreamProfile::where(['_id' => $id])->first()) {
+        if ($profile = StreamProfile::withTrashed()->where(['_id' => $id])->first()) {
             return $profile;
         }
 

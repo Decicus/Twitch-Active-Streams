@@ -5,6 +5,8 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+use App\StreamProfile;
+use App\Http\Controllers\TwitchApiController;
 class Kernel extends ConsoleKernel
 {
     /**
@@ -24,7 +26,18 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $twitchApi = new TwitchApiController(env('TWITCH_CLIENT_ID'), env('TWITCH_CLIENT_SECRET'));
+        $schedule->call(function() {
+            $profiles = StreamProfile::all();
+
+            foreach ($profiles as $profile) {
+                $stream = $twitchApi->streams($profile->user->name);
+                if (!empty($stream['stream'])) {
+                    $profile->last_stream = $stream['stream']['created_at'];
+                    $profile->last_game = $stream['stream']['game'];
+                    $profile->save();
+                }
+            }
+        })->everyFiveMinutes();
     }
 }
