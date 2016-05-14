@@ -22,8 +22,8 @@
                     <tbody>
                         @foreach($profiles as $key => $profile)
                             <tr>
-                                <th><a href="{{ route('streams.user', ['user' => $profile->user->name]) }}">{{ $profile->user->display_name }}</a></th>
-                                <td>{{ $profile->last_game or 'Unknown' }}</td>
+                                <th><a href="{{ route('streams.user', ['user' => $profile->user->name]) }}">{{ !empty($profile->user->display_name) ? $profile->user->display_name : $profile->user->name }}</a></th>
+                                <td>{{ !empty($profile->last_game) ? $profile->last_game: 'Unknown' }}</td>
                                 <td>{{ !empty($profile->last_stream) ? $profile->last_stream . ' UTC' : 'Unknown' }}</td>
                                 <td>{{ !empty($profile->updated_at) ? $profile->updated_at . ' UTC' : 'Unknown' }}</td>
                             </tr>
