@@ -15,7 +15,8 @@
                         <tr>
                             <th>Name:</th>
                             <th>Last game:</th>
-                            <th>Last stream:</th>
+                            <th>Last stream started:</th>
+                            <th>Last updated:</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,6 +25,7 @@
                                 <th><a href="{{ route('streams.user', ['user' => $profile->user->name]) }}">{{ $profile->user->display_name }}</a></th>
                                 <td>{{ $profile->last_game or 'Unknown' }}</td>
                                 <td>{{ !empty($profile->last_stream) ? $profile->last_stream . ' UTC' : 'Unknown' }}</td>
+                                <td>{{ !empty($profile->updated_at) ? $profile->updated_at . ' UTC' : 'Unknown' }}</td>
                             </tr>
                         @endforeach
                     </tbody>

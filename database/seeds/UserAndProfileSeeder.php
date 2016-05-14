@@ -3,6 +3,9 @@
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
+use App\Http\Controllers\TwitchApiController;
+use App\User;
+use App\StreamProfile;
 class UserAndProfileSeeder extends Seeder
 {
     /**
@@ -13,86 +16,46 @@ class UserAndProfileSeeder extends Seeder
     public function run()
     {
         $now = Carbon::now();
-        $bio = '[b]bold[/b]
-                [i]italic[/i]
-                [u]underline[/u]
-                [s]line through[/s]
-                [size=6]size[/size]
-                [color=#eee]color[/color]
-                [center]centered text[/center]
-                [quote]quote[/quote]
-                [quote=decicus]quote by user[/quote]
-                [url]https://www.example.com[/url]
-                [url=https://www.example.com]example.com[/url]
-                [img]https://i.imgur.com/XNfYO0D.png[/img]
-                [list=1]
-                    [*]Item 1
-                    [*]Item 2
-                    [*]Item 3
-                [/list]
-                [code]print("Hello world")[/code]
-                [youtube]dQw4w9WgXcQ[/youtube]
-                [list]
-                    [*]Item 1
-                    [*]Item 2
-                    [*]Item 3
-                [/list]';
+        $admins = ['decicus', 'cherrylynnie'];
+        $users = [
+            'decicus',
+            'cherrylynnie',
+            'mellownebula',
+            'xsmak',
+            'iwinuloselol',
+            'shroomztv',
+            'cjtherocker',
+            'halifaxafilah',
+            'thepaindog',
+            'gamerchr15',
+            'ham_carlwinslow',
+            'monstercat'
+        ];
 
-        DB::table('users')->insert([
-            '_id' => 25622621,
-            'name' => 'decicus',
-            'display_name' => 'Decicus',
-            'avatar' => 'https://static-cdn.jtvnw.net/jtv_user_pictures/decicus-profile_image-bfdbab4c9490ba74-300x300.jpeg',
-            'admin' => 1,
-            'created_at' => $now,
-            'updated_at' => $now
-        ]);
+        $twitch = new TwitchApiController(env('TWITCH_CLIENT_ID'), env('TWITCH_CLIENT_SECRET'));
+        foreach ($users as $name) {
+            $stream = $twitch->streams($name);
+            $channel = $twitch->channels($name);
+            $user = $twitch->users($name);
+            $admin = (in_array($name, $admins) ? 1 : 0);
 
-        DB::table('users')->insert([
-            '_id' => 56546952,
-            'name' => 'mellownebula',
-            'display_name' => 'MellowNebula',
-            'avatar' => 'https://static-cdn.jtvnw.net/jtv_user_pictures/mellownebula-profile_image-704775ed06de8eec-300x300.png',
-            'admin' => 0,
-            'created_at' => $now,
-            'updated_at' => $now
-        ]);
+            if (!empty($channel['_id'])) {
+                $bio = empty($user['bio']) ? '[url=https://www.twitch.tv/' . $name . ']' . $channel['display_name'] . '[/url]' : $user['bio'];
+                User::create([
+                    '_id' => $channel['_id'],
+                    'name' => $name,
+                    'display_name' => $channel['display_name'],
+                    'avatar' => $channel['logo'],
+                    'admin' => $admin
+                ]);
 
-        DB::table('users')->insert([
-            '_id' => 59386909,
-            'name' => 'cherrylynnie',
-            'display_name' => 'cherrylynnie',
-            'avatar' => 'https://static-cdn.jtvnw.net/jtv_user_pictures/cherrylynnie-profile_image-b71bd4660c445612-300x300.jpeg',
-            'admin' => 1,
-            'created_at' => $now,
-            'updated_at' => $now
-        ]);
-
-        DB::table('stream_profiles')->insert([
-            '_id' => 25622621,
-            'bio' => $bio,
-            'last_game' => 'Grand Theft Auto V',
-            'last_stream' => $now,
-            'created_at' => $now,
-            'updated_at' => $now,
-        ]);
-
-        DB::table('stream_profiles')->insert([
-            '_id' => 56546952,
-            'bio' => $bio,
-            'last_game' => 'Flappy Bird',
-            'last_stream' => $now->subMonth(),
-            'created_at' => $now,
-            'updated_at' => $now
-        ]);
-
-        DB::table('stream_profiles')->insert([
-            '_id' => 59386909,
-            'bio' => $bio,
-            'last_game' => 'DayZ',
-            'last_stream' => Carbon::now()->addDays(15),
-            'created_at' => $now,
-            'updated_at' => $now
-        ]);
+                StreamProfile::create([
+                    '_id' => $channel['_id'],
+                    'bio' => $bio,
+                    'last_game' => $channel['game'],
+                    'last_stream' => null
+                ]);
+            }
+        }
     }
 }
