@@ -8,7 +8,7 @@
     @endif
 
     <div class="jumbotron">
-        <p>Deleting a stream profile only <abbr title="Soft-deleting removes the streams from all public pages, but are still stored in the database together with the previous information.">soft deletes</abbr>. You can <a href="{{ route('admin.user.restore') }}">restore a profile</a>, or add a new one (which overwrites any previously deleted profiles).</p>
+        <p>Deleting a stream profile only <abbr title="Soft-deleting removes the streams from all public pages, but are still stored in the database together with the previous information.">soft-deletes</abbr>. You can <a href="{{ route('admin.user.restore') }}">restore a profile</a>, or add a new one (which overwrites any previously deleted profiles).</p>
 
         {!! Form::open(['route' => 'admin.user.delete', 'method' => 'post']) !!}
             <div class="form-group">

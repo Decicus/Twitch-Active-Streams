@@ -4,7 +4,7 @@
     <div class="jumbotron">
         <h2>Streams:</h2>
         <p class="text-info">
-            Streams are ordered by "last stream" time, which is based off when someone starts their stream.
+            Streams are ordered by their "last updated" and "last stream started" times, which only update when they are live.
             <br>
             The database is updated every 5 minutes.
         </p>
