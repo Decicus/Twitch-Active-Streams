@@ -7,6 +7,8 @@
             Streams are ordered by their "last updated" and "last stream started" times, which only update when they are live.
             <br>
             The database is updated every 5 minutes.
+            <br>
+            Times are shown in your local time.
         </p>
         @if(!empty($profiles->first()))
             <div class="list-group">
