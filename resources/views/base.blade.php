@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Twitch Active Streams - {{ $page or '[Unknown]' }}</title>
+        <title>{{ env('WEBSITE_TITLE') }} - {{ $page or '[Unknown]' }}</title>
         <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" charset="utf-8">
         <link rel="stylesheet" href="/css/darkly.min.css" media="screen" charset="utf-8">
         <link rel="stylesheet" href="/css/font-awesome.min.css" media="screen" charset="utf-8">
@@ -15,7 +15,7 @@
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a href="{{ route('home') }}" class="navbar-brand">Twitch Active Streams</a>
+                    <a href="{{ route('home') }}" class="navbar-brand">{{ env('WEBSITE_TITLE') }}</a>
                 </div>
                 <?php
                     $navUrls = [
@@ -98,7 +98,7 @@
 
         <div class="container-fluid">
             <div class="page-header">
-                <h1>Twitch Active Streams &mdash; {{ $page or '[Unknown]' }}</h1>
+                <h1>{{ env('WEBSITE_TITLE') }} &mdash; {{ $page or '[Unknown]' }}</h1>
             </div>
 
             @include('shared.errors')
