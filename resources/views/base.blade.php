@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="/css/font-awesome.min.css" media="screen" charset="utf-8">
         <link rel="stylesheet" href="/css/custom.css" media="screen" charset="utf-8">
         <script src="/js/jquery-1.12.2.min.js" charset="utf-8"></script>
+        <script src="/js/moment.min.js" charset="utf-8"></script>
         <script src="/js/bootstrap.min.js" charset="utf-8"></script>
     </head>
     <body>
@@ -16,8 +17,7 @@
                 <div class="navbar-header">
                     <a href="{{ route('home') }}" class="navbar-brand">Twitch Active Streams</a>
                 </div>
-                {{--*/
-                    // Dirty hack to have PHP code without the tags
+                <?php
                     $navUrls = [
                         'main' => [
                             'home' => [
@@ -52,7 +52,7 @@
                             ]
                         ]
                     ];
-                /*--}}
+                ?>
                 <ul class="nav navbar-nav">
                     {{-- Public URLs --}}
                     @foreach($navUrls['main'] as $route => $data)
@@ -104,5 +104,6 @@
             @include('shared.errors')
             @yield('main')
         </div>
+        @yield('footer')
     </body>
 </html>

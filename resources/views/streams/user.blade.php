@@ -8,6 +8,11 @@
                     <img src="{{ $user->avatar }}" class="streams-avatar" alt="{{ $user->display_name }}" title="{{ $user->display_name }}" />
                 @endif
                 <strong>{{ !empty($user->display_name) ? $user->display_name : $user->name }}</strong>
+                @if(Auth::check() && Auth::user()->admin)
+                    <div class="pull-right">
+                        <a href="{{ route('admin.user.edit',  $user->name) }}" class="text-warning"><i class="fa fa-pencil-square fa-1x"></i></a>
+                    </div>
+                @endif
             </h3>
         </div>
 

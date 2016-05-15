@@ -27,7 +27,7 @@
             </div>
 
             {!! Form::token() !!}
-            <button type="submit" class="btn btn-info"><i class="fa fa-user-secret fa-1x"></i> Restore stream profile</button>
+            <button type="submit" class="btn btn-info" {{ $trashed_profiles->isEmpty() ? 'disabled=""' : '' }}><i class="fa fa-user-secret fa-1x"></i> Restore stream profile</button>
         {!! Form::close() !!}
     </div>
 @endsection

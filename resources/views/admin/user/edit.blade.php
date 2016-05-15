@@ -19,7 +19,7 @@
                 @if(!empty($all_profiles) && count($all_profiles) > 0)
                     <div class="list-group">
                         @foreach($all_profiles as $profile)
-                            <a href="{{ route('admin.user.edit', $profile->user->name) }}" class="list-group-item list-group-item-info"><img src="{{ $profile->user->avatar }}" alt="{{ $profile->user->display_name }}" title="{{ $profile->user->display_name }}" class="streams-avatar" /> {{ $profile->user->display_name }}</a>
+                            <a href="{{ route('admin.user.edit', $profile->user->name) }}" class="list-group-item"><img src="{{ !empty($profile->user->avatar) ? $profile->user->avatar : 'https://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_150x150.png' }}" alt="{{ $profile->user->display_name }}" class="streams-avatar" /> {{ $profile->user->display_name }}</a>
                         @endforeach
                     </div>
                 @else

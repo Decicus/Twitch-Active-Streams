@@ -30,3 +30,11 @@
     width: 40px;
     height: auto;
 }
+
+.stream-offline {
+    color: #ff0000;
+}
+
+.stream-online {
+    color: #00ff00;
+}
