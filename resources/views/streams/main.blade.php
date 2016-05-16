@@ -23,7 +23,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($profiles as $key => $profile)
+                        @foreach($profiles as $profile)
                             <tr>
                                 <th><img src="{{ !empty($profile->user->avatar) ? $profile->user->avatar : 'https://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_150x150.png' }}" alt="{{ $profile->user->display_name }}" class="streams-avatar" /> <a href="{{ route('streams.user', ['user' => $profile->user->name]) }}">{{ !empty($profile->user->display_name) ? $profile->user->display_name : $profile->user->name }}</a></th>
                                 <td>{{ !empty($profile->last_game) ? $profile->last_game: 'Unknown' }}</td>
