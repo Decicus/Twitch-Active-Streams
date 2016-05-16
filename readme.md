@@ -1,27 +1,40 @@
-# Laravel PHP Framework
+# Twitch Active Streams
+Twitch Active Streams is a small project allowing for streamer communities to setup profiles for each streamer, and keep track of when each streamer last streamed.
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+## Current features
+While the feature set is a bit lacking, the project is still available for hosting for those who wish to do so.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+- Automatic checking of streams to see if they're live.
+- Admin dashboard with the ability to add, edit, delete and restore deleted profiles.
+- Profile supports formatting using BBCode.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+## Planned features
+The planned features have no ETA, but they are mentioned for the sake of keeping track of them.
 
-## Official Documentation
+- Allow users to edit their own profiles.
+- Add the ability to allow other admins to be easily added through the dashboard.
+    - Currently this has to be done manually through the database, by setting the `admin` column to `1` for the user you wish to give access to in the `users` database table.
+- Move most, if not all, of the data processing to an internal API.
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+Feel free to suggest anything through the [Issues](issues) tab
 
-## Contributing
+## Requirements
+The following things are required for setting this up:
+- [Laravel's requirements](https://laravel.com/docs/5.2/installation#server-requirements)
+- [A database system that Laravel supports](https://laravel.com/docs/5.2/database#introduction)
+- [Composer](https://getcomposer.org/)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+## Setup
+- Rename `.env.example` to `.env` and fill in the information. Primarly the database and Twitch information.
+    - The `WEBSITE_TITLE` value in the `.env` file will display the title as a prefix to the page name. The format is `{WEBSITE_TITLE} - {PAGE_NAME}`.
+    - You can create a Twitch application here: https://www.twitch.tv/settings/connections. The redirect URL has to be `http://example.com/auth/twitch/callback` (where `example.com` is **your domain**) and needs to be set the same under `TWITCH_REDIRECT_URI` in the `.env` file.
+- Run `composer install` in the project directory.
+- Run `php artisan key:generate` & `php artisan migrate` from the command line in the base project directory.
+- Point your web server to the `/public` directory of the repo.
+    - I recommend using apache2 and configuring it to set `AllowOverride` to `All` for the specific directory in the vhost, so the `.htaccess` file can set the settings.
+- For the automatic checking of streams to work, a [cron entry](https://laravel.com/docs/5.2/scheduling) has to be setup.
+    - If you have TwitchAS installed under `/var/www/twitchas`, the following cron entry applies:
+        - `* * * * * php /var/www/twitchas/artisan schedule:run >> /dev/null 2>&1`
+    - By default, streams are updated every **5** minutes.
+    - By default, user avatars are updated **weekly**.
+    - If you wish to modify the default times, look at the [scheduling docs for Laravel](https://laravel.com/docs/5.2/scheduling) and modify the `app/Console/Commands/Kernel.php` file.
