@@ -16,7 +16,7 @@ The planned features have no ETA, but they are mentioned for the sake of keeping
     - Currently this has to be done manually through the database, by setting the `admin` column to `1` for the user you wish to give access to in the `users` database table.
 - Move most, if not all, of the data processing to an internal API.
 
-Feel free to suggest anything through the [Issues](issues) tab
+Feel free to suggest anything through the [Issues](/issues) tab
 
 ## Requirements
 The following things are required for setting this up:
