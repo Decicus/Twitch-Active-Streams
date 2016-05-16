@@ -43,7 +43,7 @@ class UpdateAvatars extends Command
         $users = User::all();
 
         foreach ($users as $user) {
-            $checkUser = $twitchApi->users($user);
+            $checkUser = $twitchApi->users($user->name);
 
             if (isset($checkUser['logo']) && $checkUser['logo'] != $user->avatar) {
                 $user->avatar = $checkUser['logo'];
