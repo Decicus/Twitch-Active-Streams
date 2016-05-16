@@ -5,8 +5,6 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
-use App\StreamProfile;
-use App\Http\Controllers\TwitchApiController;
 class Kernel extends ConsoleKernel
 {
     /**
@@ -16,6 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         // Commands\Inspire::class,
+        Commands\UpdateAvatars::class,
+        Commands\UpdateStreams::class,
     ];
 
     /**
@@ -26,18 +26,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function() {
-            $twitchApi = new TwitchApiController(env('TWITCH_CLIENT_ID'), env('TWITCH_CLIENT_SECRET'));
-            $profiles = StreamProfile::all();
+        /**
+         * Checks streams every 5 minutes.
+         */
+        $schedule->command('update:streams')->everyFiveMinutes();
 
-            foreach ($profiles as $profile) {
-                $stream = $twitchApi->streams($profile->user->name);
-                if (!empty($stream['stream'])) {
-                    $profile->last_stream = $stream['stream']['created_at'];
-                    $profile->last_game = $stream['stream']['game'];
-                    $profile->save();
-                }
-            }
-        })->everyFiveMinutes();
+        /**
+         * Updates user avatars weekly.
+         */
+        $schedule->command('update:avatars')->weekly();
     }
 }
