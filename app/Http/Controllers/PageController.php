@@ -53,7 +53,7 @@ class PageController extends Controller
     {
         if (empty($user)) {
 			$streamProfile = $this->StreamProfile;
-            $profiles = $streamProfile::orderBy('last_stream', 'desc')->orderBy('updated_at', 'desc')->get();
+            $profiles = $streamProfile::orderBy('updated_at', 'desc')->orderBy('last_stream', 'desc')->get();
             $info = StreamProfile::with('user')->get();
 
             $info = json_encode($info);
